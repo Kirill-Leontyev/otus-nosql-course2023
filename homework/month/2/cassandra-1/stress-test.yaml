@@ -1,0 +1,43 @@
+specname: test1
+
+keyspace: test_keyspace
+table: first_table
+
+# Спецификация данных для каждой колонки
+columnspec:
+  - name: app_name
+    # Наименование в пределах 5-10 символов
+    size: uniform(5..10) 
+    # 30 возможных поднятых приложений на выбор
+    population: uniform(1..30) 
+  - name: env
+    size: uniform(3..6) # Наименование стенда обычно короткое (dev, prod)
+    population: gaussian(1..10) # Макс. кол-во стендов
+  - name: hostname
+    cluster: gaussian(5..10) # Будем считать что хост выражен в виде DNS имени
+  - name: log_datetime
+    cluster: fixed(1000) # Макс кол-во заходов пользователя
+  - name: log_message
+    size: gaussian(100..500) # Сообщение может быть длинным
+  - name: log_level
+    size: fixed(8) # Check log4j levels
+
+
+insert: 
+  # Используем одну партицию каждый batch
+  # partitions: fixed(1)
+  # Используем от 1 до 20 партиций каждый batch
+  partitions: uniform(1..20)
+  # Не использовать batch log
+  batchtype: UNLOGGED 
+  # 10 rows being included in the partition to update
+  # every batch for each partition
+  # select: fixed(10)
+  
+queries:
+  select_by_host:
+    cql: select * from first_table where app_name = ? and env = ? and host_name = ? 
+    fields: samerow
+  #select_by_log_level:
+    #cql: select * from first_table where log_level = ?
+    #fields: multirow

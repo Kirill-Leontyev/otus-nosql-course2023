@@ -1,0 +1,1 @@
+./apache-cassandra-5.0-beta1/tools/bin/cassandra-stress user profile=./stress-conf.yml n=100000 no-warmup "ops(insert=3,select_by_host=1,select_by_log_level=1)" -node 127.0.0.1 -graph file=result.html -rate threads=1
