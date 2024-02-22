@@ -1,0 +1,13 @@
+data/data/second_keyspace/backup_table-ae6a0d70d1ac11ee8b2a61453f215b01/snapshots/my_snapshot
+
+cqlsh -f schema.cql
+
+second_keyspace> SELECT *
+                 FROM second_keyspace.backup_table
+                 LIMIT 501
+[2024-02-22 21:46:46] 0 rows retrieved in 71 ms (execution: 8 ms, fetching: 63 ms)
+
+cp -R snapshots/my_snapshot/. .
+
+./nodetool drain
+./nodetool stopdaemon
