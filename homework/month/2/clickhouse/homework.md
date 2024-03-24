@@ -77,8 +77,4 @@ SQL-ориентированный RBAC ([см. тут](https://clickhouse.com/d
     <figcaption>Запрос 2</figcaption>
 </figure>
 
-## Подготовка кластера
-
-Для поднятия кластера аналогично было выбрано решение от Yandex.Cloud.
-
 
